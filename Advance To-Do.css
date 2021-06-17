@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    background-color: skyblue;
+}
+h1 {
+    text-align: center;
+    text-decoration: underline;
+    color: steelblue;
+}
+#divToDo {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+#divInput {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
+#divCardContainer {
+    width: 80%;
+    margin-top: 10px;
+    padding: 10px;
+}
+#tex {
+    width: 70%;
+    height: 50px;
+    border: 0;
+    outline: 0;   
+    font-size: 20px;
+    letter-spacing: 2px;
+    border-radius: 5px;
+    color: rgba(0, 0, 0, 0.6);
+}
+#btn {
+    width: 25%;
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: rgba(9, 45, 80, 0.568);
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 5px snow;
+    background-color: rgba(36, 185, 240, 0.61);
+}
+#btn:hover {
+    color: rgba(36, 185, 240, 0.61);
+    background-color: rgba(9, 45, 80, 0.568);
+}
+
+.card1 {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 0 5px rgba(1, 9, 22, 0.452);
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 3px;
+}
+.card1:hover {
+    background-color: dodgerblue
+}
+.card1:hover .divDateTime{
+    color: gold;
+}
+.card1:hover .divIconContainer i{
+    color: gold;
+}
+.divTextTime {
+    width: 70%;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+.input1{
+        width: 100%;
+        border-radius: 5px;
+        font-size: 15px;
+        border: 0;
+        outline: 0;
+}
+.divDateTime {
+    color: rgba(0, 0, 139, 0.692);
+    font-size: 12px;
+    letter-spacing: 1px;
+    margin-top: 4px;
+    font-weight: 550;
+}
+.divIconContainer {
+    position: relative;
+    width: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.divIconContainer i{
+    font-size: 20px;
+    color: darkblue;
+}
+.divIconContainer i:hover{
+    text-shadow: 0 0 15px rgb(71, 9, 9);
+}
+.divIconContainer i:nth-of-type(3){
+    position: absolute;
+    left: 10%;
+    font-size: 0;
+}
