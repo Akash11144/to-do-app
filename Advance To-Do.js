@@ -1,7 +1,7 @@
 var tex1=document.getElementById("tex");
 var btn1=document.getElementById("btn");
 var cardContainer=document.getElementById("divCardContainer");
-var ins=[];delV=1;
+var ins=[];delV=1;update=0;
 
 
 function elementCreation(eleToBECreated,parentElement){
@@ -23,12 +23,12 @@ function taskTime(){
     return a.getHours()+":"+a.getMinutes()+":"+a.getSeconds();
 }
 function fetching(){
-    var ee=localStorage.getItem("task")
+    var ee=localStorage.getItem("task1")
     if(ee==null)
         alert("browser empty")
     else
         {
-            var ee1=JSON.parse(localStorage.getItem("task"));
+            var ee1=JSON.parse(localStorage.getItem("task1"));
             var max=[];
             for(var k=0;k<ee1.length;k++)
             {
@@ -54,7 +54,7 @@ function fetching(){
                  }
                  else
                  {
-                    createCard(ee1[i].work,ee1[i].dd,ee1[i].tt,ee1[i].cc)
+                    createCard(ee1[i].work,ee1[i].dd,ee1[i].tt,ee1[i].cc,ee1[i].uf)
                  }
                
              }
@@ -63,7 +63,7 @@ function fetching(){
 fetching();
 
 
-function createCard(msg,datee,timee,cnt)
+function createCard(msg,datee,timee,cnt,update1)
 {
     var card=elementCreationP("div", cardContainer);
     card.className="card1";
@@ -83,9 +83,15 @@ function createCard(msg,datee,timee,cnt)
 
     task.value=msg;
     task.disabled=true; 
+    if(update1==0){
+        date1.innerText= "Created at " +datee;
+        time1.innerText="  "+"/"+" "+timee;
+    }
+    else{
+        date1.innerText= datee;
+        time1.innerText="  "+"/"+" "+timee;
+    }
 
-    date1.innerText= "Created at " +datee;
-    time1.innerText="  "+"/"+" "+timee;
 
     iconEdit.className="far fa-edit";
     iconDel.className="far fa-trash-alt";
@@ -93,11 +99,13 @@ function createCard(msg,datee,timee,cnt)
 
 
     var counter=cnt;
+    up=update1;
     ins.push({
         work:msg,
         dd:datee,
         tt:timee,
-        cc:counter
+        cc:counter,
+        uf:up
     });
     console.log(ins);
 
@@ -108,6 +116,7 @@ function createCard(msg,datee,timee,cnt)
     });
 
     iconUpdate.addEventListener("click",function(){
+        up=1;
         task.disabled=true;
         iconEdit.style.fontSize="20px";
         iconUpdate.style.fontSize="0px";
@@ -115,20 +124,52 @@ function createCard(msg,datee,timee,cnt)
         time1.innerText="";
         date1.innerText="Updated at " + taskDate();
         time1.innerText="/"+taskTime();
-        if(task.value=="")
-            task.value="Enter Task or If task is completed then delete it"
+        var f=JSON.parse(localStorage.getItem("task1"));
+        for(var i=0;i<f.length;i++){
+            var t;
+            if(counter==f[i].cc)
+            {
+                t=i;
+                break;
+            }
+        }
+            if(task.value=="")
+            {
+                 task.value="Enter Task or If task is completed then delete it"
+                 ins[i]={
+                     work:task.value,
+                     dd:date1.innerText,
+                     tt:time1.innerText,
+                     cc:counter,
+                     uf:up
+                 };
+                 f[i]=ins[i];
+                 localStorage.setItem("task1",JSON.stringify(f));
+            }
+         else{
+             ins[i]={
+                 work:task.value,
+                 dd:date1.innerText,
+                 tt:time1.innerText,
+                 cc:counter,
+                 uf:up
+             };
+             f[i]=ins[i];
+             console.log( f[i])
+             console.log(ins[i])
+             localStorage.setItem("task1",JSON.stringify(f));
+         }
     });
     
     iconDel.addEventListener("click",function(){
-        var f=JSON.parse(localStorage.getItem("task"));
+        var f=JSON.parse(localStorage.getItem("task1"));
         for(var i=0;i<f.length;i++){
             if(counter==f[i].cc)
             {
                 ins[i]="";
                 f[i]="";
                 localStorage.removeItem("task");
-                localStorage.setItem("task",JSON.stringify(f));
-                console.log("in delete "+ ins);
+                localStorage.setItem("task1",JSON.stringify(f));
             }
         }
         card.remove();
@@ -142,8 +183,8 @@ btn1.addEventListener("click",function(e){
         alert("No Task to Add")
         return;
     }
-    createCard(tex1.value,taskDate(),taskTime(),delV);
-    localStorage.setItem("task", JSON.stringify(ins));
+    createCard(tex1.value,taskDate(),taskTime(),delV,update);
+    localStorage.setItem("task1", JSON.stringify(ins));
     ++delV;
    tex1.value="";
 });
